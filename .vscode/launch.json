@@ -6,6 +6,23 @@
   "configurations": [
     {
       "type": "java",
+      "name": "TomEE EAR Debug (Full App)",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5005,
+      "preLaunchTask": "TomEE EAR: Debug",
+      "postDebugTask": "TomEE: Stop Server",
+      "projectName": "VioApp",
+      "sourcePaths": [
+        "${workspaceFolder}/VioUtil/src",
+        "${workspaceFolder}/VioEJB/ejbModule",
+        "${workspaceFolder}/VioWeb/src",
+        "${workspaceFolder}/VioWebAdmin/src",
+        "${workspaceFolder}/VTX-TXAPI/src"
+      ]
+    },
+    {
+      "type": "java",
       "name": "TomEE Debug (Hot Reload)",
       "request": "attach",
       "hostName": "localhost",
@@ -36,23 +53,6 @@
       "request": "launch",
       "mainClass": "com.vesystems.violation.task.TaskClient",
       "projectName": "VioTaskClient"
-    },
-    {
-      "type": "java",
-      "name": "TomEE EAR Debug (Full App)",
-      "request": "attach",
-      "hostName": "localhost",
-      "port": 5005,
-      "preLaunchTask": "TomEE EAR: Debug",
-      "postDebugTask": "TomEE: Stop Server",
-      "projectName": "VioApp",
-      "sourcePaths": [
-        "${workspaceFolder}/VioUtil/src",
-        "${workspaceFolder}/VioEJB/ejbModule",
-        "${workspaceFolder}/VioWeb/src",
-        "${workspaceFolder}/VioWebAdmin/src",
-        "${workspaceFolder}/VTX-TXAPI/src"
-      ]
     },
     {
       "type": "java",

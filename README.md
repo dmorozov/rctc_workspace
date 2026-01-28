@@ -54,6 +54,12 @@ This will:
 3. Package modules (JAR, EJB, WAR)
 4. Create the EAR file at `VioApp/target/VioApp.ear`
 
+Note: you need to put a Violation.properties into your current folder or into your user's home folder:
+
+```bash
+cp VioApp/Properties/Violation_lam01demo-webapp-01.properties ~/Violation.properties
+```
+
 ## Deployment Instructions
 
 ### Apache TomEE 10.0+ Plus
@@ -217,8 +223,8 @@ Specify commands available:
 #### Installation
 
 ```bash
-$ npm install -g @anthropic-ai/claude-code
-$ npm install -g @anthropic-ai/claude-code@latest
+$ curl -fsSL https://claude.ai/install.sh | bash
+
 $ claude
 or
 $ claude --dangerously-skip-permissions
