@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(find:*)",
+      "Bash(unzip:*)",
+      "Bash(./mvnw clean package:*)",
+      "Bash(./mvnw dependency:tree:*)",
+      "Bash(./mvnw:*)",
+      "Bash(docker exec:*)",
+      "Bash(xargs -I{} sh -c 'unzip -l \"\"{}\"\" 2>/dev/null | grep -q \"\"JsonProviderImpl\"\" && echo \"\"{}\"\"')",
+      "Bash(for jar in /opt/tomcat/lib/*.jar)",
+      "Bash(do unzip:*)",
+      "Bash(echo:*)",
+      "Bash(done)",
+      "Bash(for jar in /workspaces/VioApp/target/rctc.ear)",
+      "Bash(jar tf:*)",
+      "Bash(for jar in lib/*.jar)",
+      "Bash(for jar in *.jar)",
+      "Bash(ls:*)",
+      "Bash(xargs -I {} sh -c 'echo \"\"===== {} =====\"\"; head -100 \"\"{}\"\"')",
+      "Bash(grep:*)",
+      "Bash(/workspaces/VioApp/mvnw compile:*)",
+      "Bash(ss:*)",
+      "Bash(netstat:*)",
+      "Bash(jar:*)"
+    ]
+  }
+}

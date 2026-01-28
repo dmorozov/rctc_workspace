@@ -56,8 +56,8 @@
         "Shkrew.jstlsnippets", // JSTL snippets
         "J0hnMilt0n.vscode-jsp-clone",
         "samuel-weinhardt.vscode-jsp-lang",
-        "johnstoncode.svn-scm", // SVN client
-        "rinrab.subversion", // SVN client (extends johnstoncode.svn-scm)
+        "donjayamanne.githistory",
+        "mhutchie.git-graph",
         "Anthropic.claude-code" // Claude AI integration
       ]
     }

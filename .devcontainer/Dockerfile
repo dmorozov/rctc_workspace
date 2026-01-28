@@ -12,8 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gnupg \
     lsb-release \
     sudo \
-    git \
-    gh \
+    git git-svn \
     subversion \
     libapache2-mod-svn \
     unzip \

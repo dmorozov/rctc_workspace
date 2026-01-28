@@ -2,37 +2,22 @@
 
 ## Project Overview
 
-This project showcases a complete enterprise application architecture with:
+This project is using JakartaEE enterprise application architecture with:
 - **JakartaEE 10** platform
 - **Apache Struts 7** MVC framework with Tiles layout management
 - **Stateless EJB** session beans for business logic
 - **Remote EJB** interface for distributed calls
 - **JPA 3.1** with Hibernate and DB2
 - **JDBC alternative** implementation with repository pattern
-- **Security integration** between web and EJB layers
 - **Maven multi-module** project structure
 - **EAR packaging** for enterprise deployment
-
-## Migration status
-
-The following modules are fully migrated:
-
-- VioEJB
-- VioUtil
-- VioWeb
-- VioWebAdmin
-- VTX-TXAPI
-- VioTaskClient
-- VioLetterClient
-- VioBatchClient
-- VioApp
 
 ## Prerequisites
 
 - **Java 17** or higher
 - **Maven 3.8+** (or use the included Maven wrapper)
-- **DB2 Database**
-- **TomEE 10.0+ Plus** or **GlassFish 7**
+- **DB2** or "**PostgreSQL** Database
+- **TomEE 10.1+ Plus**
 
 ### Maven Wrapper
 
@@ -71,7 +56,7 @@ This will:
 
 ## Deployment Instructions
 
-### Option 1: Apache TomEE 10.0+ Plus
+### Apache TomEE 10.0+ Plus
 
 #### 1. Download and Install TomEE
 
@@ -149,100 +134,6 @@ Open browser: `http://localhost:8080/Violation/`
 
 ---
 
-### Option 2: GlassFish 7
-
-#### 1. Download and Install GlassFish
-
-```bash
-# Download GlassFish 7
-wget https://download.eclipse.org/ee4j/glassfish/glassfish-7.0.14.zip
-unzip glassfish-7.0.14.zip
-cd glassfish7
-```
-
-#### 2. Start GlassFish
-
-```bash
-bin/asadmin start-domain domain1
-```
-
-#### 3. Configure PostgreSQL JDBC Driver
-
-```bash
-# Copy DB2 driver to GlassFish lib
-wget https://repo1.maven.org/maven2/com/ibm/db2/jcc/11.1.4.4/jcc-11.1.4.4.jar -P glassfish/domains/domain1/lib/
-```
-
-#### 4. Create JDBC Connection Pool
-
-```bash
-bin/asadmin create-jdbc-connection-pool \
-  --datasourceclassname org.postgresql.ds.PGConnectionPoolDataSource \
-  --restype javax.sql.ConnectionPoolDataSource \
-  --property "user=sampleuser:password=samplepass:serverName=localhost:portNumber=5432:databaseName=sampledb" \
-  SamplePool
-```
-
-#### 5. Create JDBC Resource
-
-```bash
-bin/asadmin create-jdbc-resource \
-  --connectionpoolid SamplePool \
-  jdbc/SampleDS
-```
-
-#### 6. Configure Security Realm (Optional)
-
-```bash
-# Create file realm
-bin/asadmin create-auth-realm \
-  --classname com.sun.enterprise.security.auth.realm.file.FileRealm \
-  --property file=${com.sun.aas.instanceRoot}/config/keyfile:jaas-context=fileRealm \
-  sample-realm
-
-# Add users
-bin/asadmin create-file-user \
-  --groups admin,user \
-  --authrealmname sample-realm \
-  admin
-
-bin/asadmin create-file-user \
-  --groups user \
-  --authrealmname sample-realm \
-  user
-```
-
-#### 7. Deploy the EAR
-
-```bash
-# Via command line
-bin/asadmin deploy VioApp/target/VioApp.ear
-
-# Or via Admin Console
-# Open http://localhost:4848
-# Applications -> Deploy -> Upload VioApp.ear
-```
-
-#### 8. Access the Application
-
-Open browser: `http://localhost:8080/Violation`
-
----
-
-### Security Configuration
-
-The application implements declarative security:
-
-1. **EJB Layer**:
-   - Role-based access control with `@RolesAllowed`, `@PermitAll`
-   - Security context propagation from web to EJB layer
-   - Configured in `ejb-jar.xml`
-
-2. **Web Layer**:
-   - Form-based authentication
-   - Protected resources under `/secure/*`
-   - Configured in `web.xml`
-
 ### Struts 7 Plugins
 
 The following Struts 7 plugins are configured:
@@ -259,10 +150,6 @@ The following Struts 7 plugins are configured:
 # Change TomEE ports in conf/server.xml
 <Connector port="8080" ... />  # Change to 8081, etc.
 
-# Change GlassFish ports
-bin/asadmin set configs.config.server-config.http-service.http-listener.http-listener-1.port=8081
-```
-
 ### Debugging
 
 Enable detailed logging:
@@ -274,33 +161,25 @@ com.example.jakartaee.level = FINE
 org.apache.struts2.level = FINE
 ```
 
-**GlassFish**: Edit `glassfish/domains/domain1/config/logging.properties`
-```properties
-com.example.jakartaee.level=FINE
-org.apache.struts2.level=FINE
-```
-
 ## Additional Resources
 
 - [JakartaEE Documentation](https://jakarta.ee/)
 - [Apache Struts Documentation](https://struts.apache.org/)
 - [TomEE Documentation](https://tomee.apache.org/)
-- [GlassFish Documentation](https://glassfish.org/)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
 - [Awesome Jakarta EE Resources for Developers](https://awesome-jakartaee.github.io/)
 
+---
 
-------
+## Using AI in development
 
-# Using AI in development
-
-## SpecKit
+### SpecKit
 
 Spec-Driven Development flips the script on traditional software development. For decades, code has been king — specifications were just scaffolding we built and discarded once the "real work" of coding began. Spec-Driven Development changes this: specifications become executable, directly generating working implementations rather than just guiding them.
 
 Note: the GitHub SpecKit works with any Cli AI tools (Claude Code, Gemini CLI, OpenAI Codex etc.)
 
-### Installation
+#### Installation
 
 ```bash
 Install uv tool:
@@ -333,9 +212,9 @@ Specify commands available:
 7. /speckit.analyze (optional) - Cross-artifact consistency & alignment report (after /speckit.tasks, before /speckit.implement)
 8. /speckit.implement - Execute implementation
 
-## Claude Code
+### Claude Code
 
-### Installation
+#### Installation
 
 ```bash
 $ npm install -g @anthropic-ai/claude-code
@@ -355,13 +234,7 @@ In Visual Studion Code -> Extensions (Ctrl+Shift+x) -> Search and add extension:
 
 Claud Desktop: https://docs.pieces.app/products/mcp/claude-desktop
 
-## Gemini CLI
-
-```bash
-npm install -g @google/gemini-cli
-```
-
-## Claude Desktop
+### Claude Desktop
 
 Windows/MacOS: https://claude.com/download
 
@@ -369,211 +242,37 @@ Linux;
 https://github.com/aaddrick/claude-desktop-debian/releases
 https://github.com/aaddrick/claude-desktop-debian/releases/download/v1.1.10%2Bclaude0.14.10/claude-desktop-0.14.10-amd64.AppImage
 
-## Improving your development experience with TomEE 10 in VS Code:
+## Git-SVN
 
-Start TomEE with Hot Reload
+1. Optional. Clone Workspace repository (git):
 
-1. Build with debug information:
-./mvnw clean package -DskipTests,tomee
+```bash
+git clone git@github.com:dmorozov/rctc_workspace.git
+```
 
-2. Run/Debug
-./mvnw org.apache.tomee.maven:tomee-maven-plugin:debug -pl VioApp -Dtomee
+This repository contains .devcontainer, .vscode, and .claude configs
 
-Utilities
-- Check active profiles: ./mvnw help:active-profiles -Dtomee -pl VioApp
+2. Clone RCTC SVN tracked repositories with git-svn:
+```bash
+cd rctc_workspace
 
-## Java classes Hot Swap Configuration
+git svn clone svn://10.0.50.46/RCTC/branches/rctc_v20/VioApp
+git svn clone svn://10.0.50.46/RCTC/branches/rctc_v20/VioUtil
+git svn clone svn://10.0.50.46/RCTC/branches/rctc_v20/VioEJB
+git svn clone svn://10.0.50.46/RCTC/branches/rctc_v20/VioWeb
+git svn clone svn://10.0.50.46/RCTC/branches/rctc_v20/VioWebAdmin
+git svn clone svn://10.0.50.46/RCTC/branches/rctc_v20/VTX-TXAPI
+git svn clone svn://10.0.50.46/RCTC/branches/rctc_v20/VioBatchClient
+git svn clone svn://10.0.50.46/RCTC/branches/rctc_v20/VioLetterClient
+git svn clone svn://10.0.50.46/RCTC/branches/rctc_v20/VioTaskClient
 
-HotswapAgent + DCEVM Setup Guide for TomEE (Java 21)
+3. Git-SVN cheat list
 
- What is DCEVM + HotswapAgent?
+| **Action**             | **Standard Git** | **git svn**       |
+| ---------------------- | ---------------- | ----------------- |
+| **Download project**   | `git clone`      | `git svn clone`   |
+| **Get latest updates** | `git pull`       | `git svn rebase`  |
+| **Share your work**    | `git push`       | `git svn dcommit` |
+| **View history**       | `git log`        | `git svn log`     |
 
- DCEVM (Dynamic Code Evolution VM) is a patched JVM that extends hot-swap capabilities beyond standard Java limitations:
-
- | Feature                | Standard JVM | DCEVM |
- |------------------------|--------------|-------|
- | Change method body     | ✅           | ✅    |
- | Add new method         | ❌           | ✅    |
- | Remove method          | ❌           | ✅    |
- | Add/remove fields      | ❌           | ✅    |
- | Change class hierarchy | ❌           | ❌    |
-
- HotswapAgent is a plugin framework that bridges DCEVM with application frameworks. It handles:
- - Reinitializing CDI beans after class change
- - Refreshing Struts action mappings
- - Reloading EJB proxies
- - And more...
-
- Why This Solves Your Problem
-
- Your current issue:
- .class file changed on disk → TomEE classloader ignores it → old code runs
-
- With DCEVM + HotswapAgent:
- .class file changed → DCEVM redefines class in JVM → HotswapAgent refreshes CDI/Struts → new code runs instantly
-
- No context reload. No session loss. Sub-second turnaround.
-
- ---
- Setup Steps
-
- Step 1: Download JetBrains Runtime (JBR) with DCEVM
-
- JetBrains Runtime is a patched OpenJDK that includes DCEVM support.
-
- 1. Go to https://github.com/JetBrains/JetBrainsRuntime/releases
- 2. Download JBR 21 for your platform (look for jbr_dcevm-21.x.x-linux-x64 or similar)
- 3. Extract to a location, e.g., /opt/jbr-21
-
- # Example for Linux x64
- cd /opt
- wget https://github.com/JetBrains/JetBrainsRuntime/releases/download/jbr-release-21.0.5b631.8/jbr_dcevm-21.0.5-linux-x64-b631.8.tar.gz
- tar -xzf jbr_dcevm-21.0.5-linux-x64-b631.8.tar.gz
- mv jbr_dcevm-21.0.5-linux-x64-b631.8 jbr-21
-
- Step 2: Download HotswapAgent
-
- 1. Go to https://github.com/HotswapProjects/HotswapAgent/releases
- 2. Download hotswap-agent-X.X.X.jar (latest version)
- 3. Important: Rename to exactly hotswap-agent.jar
- 4. Copy to JBR's lib/hotswap folder:
-
- mkdir -p /opt/jbr-21/lib/hotswap
- cp hotswap-agent-*.jar /opt/jbr-21/lib/hotswap/hotswap-agent.jar
-
- Step 3: Create hotswap-agent.properties
-
- Create a configuration file in your project's classpath root (e.g., VioWeb/src/hotswap-agent.properties):
-
- # Enable plugins for your stack
- pluginPackages=org.hotswap.agent.plugin
-
- # Disable plugins you don't need (speeds up startup)
- disabledPlugins=Spring,Hibernate,Vaadin
-
- # Enable useful plugins for your stack
- # CDI (OpenWebBeans - used by TomEE)
- owb.plugin=true
-
- # EJB support
- ejb.plugin=true
-
- # Watch extra directories for changes
- extraClasspath=/workspaces/VioWeb/target/classes;\
- /workspaces/VioEJB/target/classes;\
- /workspaces/VioUtil/target/classes
-
- # Logging
- LOGGER=info
-
- Step 4: Configure TomEE Maven Plugin to Use JBR
-
- Modify VioApp/pom.xml in the tomee profile to use JBR and enable DCEVM:
-
- <plugin>
-     <groupId>org.apache.tomee.maven</groupId>
-     <artifactId>tomee-maven-plugin</artifactId>
-     <configuration>
-         <!-- Use JBR with DCEVM -->
-         <args>-XX:+AllowEnhancedClassRedefinition -XX:HotswapAgent=fatjar</args>
-
-         <!-- Keep reloadOnUpdate false - DCEVM handles it -->
-         <reloadOnUpdate>false</reloadOnUpdate>
-
-         <!-- ... rest of your config ... -->
-     </configuration>
- </plugin>
-
- Step 5: Set JAVA_HOME to JBR
-
- Before running Maven:
-
- export JAVA_HOME=/opt/jbr-21
- export PATH=$JAVA_HOME/bin:$PATH
-
- # Verify
- java -version
- # Should show JetBrains Runtime
-
- Or add to your .bashrc / .zshrc / devcontainer.json.
-
- Step 6: Run and Test
-
- # Build
- ./mvnw clean compile -pl VioWeb -am -Dtomee
-
- # Start TomEE with HotswapAgent
- JAVA_HOME=/opt/jbr-21 ./mvnw org.apache.tomee.maven:tomee-maven-plugin:debug -pl VioApp -Dtomee
-
- Now when you change SearchBatchForm.java:
- 1. VS Code auto-compiles to .class
- 2. tomee-maven-plugin syncs to deployed location (or debugger pushes via JPDA)
- 3. DCEVM redefines the class in the running JVM
- 4. HotswapAgent refreshes CDI beans
- 5. Refresh browser → new code runs immediately
-
- ---
- Relevant Plugins for Your Stack
-
- | Plugin       | Purpose                   | Your Use                 |
- |--------------|---------------------------|--------------------------|
- | OpenWebBeans | CDI bean reloading        | TomEE uses OWB for CDI   |
- | EJB          | Session bean reloading    | Your VioEJB module       |
- | Tomcat       | Web container integration | TomEE is based on Tomcat |
- | Logback      | Log config reload         | If using Logback         |
-
- Plugin Configuration Example
-
- # VioWeb/src/hotswap-agent.properties
-
- # OpenWebBeans (CDI) - critical for your Struts actions with @Inject
- owb.plugin=true
-
- # EJB support for VioEJB
- ejb.plugin=true
-
- # Watch these directories for .class changes
- extraClasspath=/workspaces/VioWeb/target/classes;\
- /workspaces/VioEJB/target/classes
-
- # Tomcat integration (handles web.xml, etc.)
- tomcat.plugin=true
-
- ---
- Limitations
-
- 1. Cannot change class hierarchy (extends/implements)
- 2. Cannot add/remove enum constants
- 3. Cannot change annotations on injected fields (requires container restart)
- 4. Some framework caches may need manual refresh
-
- ---
- Alternative: VS Code Debug Hot-Swap (Simpler but Limited)
-
- If DCEVM setup is too complex, VS Code's debugger can do basic hot-swap:
-
- 1. Connect debugger to TomEE (already working for you)
- 2. Edit Java code
- 3. Save file → VS Code compiles
- 4. Use "Hot Code Replace" (automatic in debug mode)
-
- Limitation: Only method body changes. No new methods/fields.
-
- This explains why your debugger shows new value but UI doesn't - the JVM replaced bytecode, but Struts/CDI still holds references to the old object state.
-
- ---
- Summary
-
- | Component                           | Purpose                                                            |
- |-------------------------------------|--------------------------------------------------------------------|
- | JBR (JetBrains Runtime)             | JVM with DCEVM patches for enhanced class redefinition             |
- | HotswapAgent                        | Plugin framework that refreshes framework state after class reload |
- | hotswap-agent.properties            | Configuration for which plugins to enable                          |
- | -XX:+AllowEnhancedClassRedefinition | JVM flag to enable DCEVM                                           |
- | -XX:HotswapAgent=fatjar             | JVM flag to enable HotswapAgent with all plugins                   |
-
- Sources
-
- - https://github.com/HotswapProjects/HotswapAgent
- - https://github.com/JetBrains/JetBrainsRuntime
- - http://dcevm.github.io/
+all other Git commands are the same: branching, stashing, etc
