@@ -1,0 +1,88 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/java
+{
+  "name": "RCTCv20min",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "rctc-app",
+  "shutdownAction": "stopCompose",
+  // Explicitly declaring which source-code folder to mount and where to mount it in the container
+  "workspaceFolder": "/workspaces",
+  "features": {
+    // Installs a set of common command line utilities, Oh My Zsh!, and sets up a non-root user.
+    "ghcr.io/devcontainers/features/common-utils:2.0.11": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true,
+      "installOhMyZshConfig": true,
+      "upgradePackages": true,
+      "username": "ubuntu"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      // Set *default* container specific settings.json values on container create.
+      "settings": {
+        // Use JetBrains Runtime (JBR) with DCEVM for hot-swap support
+        "java.jdt.ls.java.home": "/opt/jbr-21",
+        "java.configuration.runtimes": [
+          {
+            "name": "JavaSE-21",
+            "path": "/opt/jbr-21",
+            "default": true
+          }
+        ],
+        // Enable auto-build for hot-swap to work
+        "java.autobuild.enabled": true
+      },
+      "extensions": [
+        // Backend development
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-maven",
+        "redhat.vscode-xml",
+        "redhat.vscode-microprofile", // YAML editor
+        "samuel-weinhardt.vscode-jsp-lang", // JSP editor
+        "redhat.vscode-community-server-connector", // Tomcat connector
+        // Git extensions
+        "donjayamanne.githistory", // Git History
+        "mhutchie.git-graph", // Git History Graph
+        // Frontend development
+        "formulahendry.auto-close-tag", // Auto Close Tag
+        "formulahendry.auto-rename-tag", // Auto Rename Tag
+        "Zignd.html-css-class-completion", // IntelliSense for CSS class names in HTML
+        "naumovs.color-highlight", // Color Highlight
+        "esbenp.prettier-vscode", // Prettier code formatter
+        "dotdevru.prettier-java", // Prettier Java plugin
+        "DebrajBhal.jstl-snippets-by-deb", // JSTL snippets
+        "Shkrew.jstlsnippets", // JSTL snippets
+        "J0hnMilt0n.vscode-jsp-clone",
+        "samuel-weinhardt.vscode-jsp-lang",
+        "johnstoncode.svn-scm", // SVN client
+        "rinrab.subversion", // SVN client (extends johnstoncode.svn-scm)
+        "Anthropic.claude-code" // Claude AI integration
+      ]
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/postCreateCommand.sh",
+  "postStartCommand": "bash .devcontainer/postStartCommand.sh",
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [
+    8080, 8025, 5434
+  ],
+  // Define user friendly names for exposed ports
+  "portsAttributes": {
+    "8080": {
+      "label": "RCTC applications"
+    },
+    "8025": {
+        "label": "Mailpit"
+    },
+    "5434": {
+        "label": "PostgreSQL"
+    }
+  },
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind" // Binding the host docker socket to the containerit
+  ],
+  // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "ubuntu"
+}

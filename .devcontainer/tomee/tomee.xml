@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements.  See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<tomee>
+  <!-- see https://tomee.apache.org/latest/docs/admin/configuration/containers.html -->
+
+  <SecurityService id="mySecurityService" type="SecurityService">
+    defaultUser = guest
+  </SecurityService>
+
+  <!-- When we deploy a web app we need to deploy to webapps -->
+  <!-- <Deployments dir="webapps" /> -->
+
+  <!-- When we deploy an EAR we need to deploy to apps -->
+   <Deployments dir="apps" />
+
+  <Resource id="jdbc/test_rctc_db" type="DataSource">
+    JdbcDriver com.ibm.db2.jcc.DB2Driver
+    JdbcUrl jdbc:db2://10.0.50.43:50001/rctc_db:currentSchema=RCTCINST;
+    UserName rctcinst
+    Password RCTCbric2020
+    JtaManaged true
+    InitialSize 5
+    MaxActive 20
+    MaxIdle 10
+    MinIdle 5
+    MaxWait 10000
+    TestOnBorrow true
+    ValidationQuery SELECT 1 FROM SYSIBM.SYSDUMMY1
+  </Resource>
+
+  <Resource id="jdbc/pg_rctc_db" type="DataSource">
+    JdbcDriver org.postgresql.Driver
+    JdbcUrl jdbc:postgresql://rctc-db:5432/RCTC_DB
+    UserName rctc_user
+    Password rctc_user
+    JtaManaged true
+    InitialSize 5
+    MaxActive 20
+    MaxIdle 10
+    MinIdle 5
+    MaxWait 10000
+    TestOnBorrow true
+    ValidationQuery SELECT 1
+  </Resource>
+</tomee>

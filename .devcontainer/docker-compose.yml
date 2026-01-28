@@ -1,0 +1,67 @@
+version: "3.8"
+
+volumes:
+  postgres-data:
+  mailpit-data:
+    driver: local
+
+networks:
+  default:
+    name: rctc-app-network
+    driver: bridge
+
+services:
+  rctc-app:
+    container_name: rctc-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        INSTALL_MAVEN: "true"
+        MAVEN_VERSION: "3.9.12"
+        NODE_VERSION: "24.12.0"
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    volumes:
+      - ..:/workspaces:cached
+      - ~/.ssh:/home/ubuntu/.ssh
+      - ~/.m2:/home/ubuntu/.m2
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Uncomment the next line to use a non-root user for all processes.
+    # user: ubuntu
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mailpit
+    restart: unless-stopped
+    ports:
+      # Web UI: access via http://localhost:8025
+      - "8025:8025"
+      # SMTP server: configure your app to send mail to localhost:1025
+      - "1025:1025"
+    volumes:
+      # Optional: Persist captured emails across container restarts
+      - mailpit-data:/data
+    environment:
+      # Optional: Set a maximum number of messages to retain (default is 500)
+      MP_MAX_MESSAGES: 5000
+      # Optional: Set the timezone
+      TZ: America/Los_Angeles
+
+  rctc-db:
+    container_name: rctc-db
+    image: postgres:18-alpine # postgres:18-bookworm
+    restart: always
+    environment:
+      POSTGRES_USER: rctc_user
+      POSTGRES_PASSWORD: rctc_user
+      POSTGRES_DB: RCTC_DB
+    ports:
+      - "5434:5432" # Expose Postgres on host port 5434
+    volumes:
+      - postgres-data:/var/lib/postgresql/data # Persistent data storage

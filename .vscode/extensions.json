@@ -1,0 +1,25 @@
+{
+    "recommendations": [
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-maven",
+        "redhat.vscode-xml",
+        "redhat.vscode-microprofile",
+        "redhat.vscode-community-server-connector",
+        "samuel-weinhardt.vscode-jsp-lang",
+        "donjayamanne.githistory",
+        "mhutchie.git-graph",
+        "formulahendry.auto-close-tag",
+        "formulahendry.auto-rename-tag",
+        "Zignd.html-css-class-completion",
+        "naumovs.color-highlight",
+        "esbenp.prettier-vscode",
+        "dotdevru.prettier-java",
+        "DebrajBhal.jstl-snippets-by-deb",
+        "Shkrew.jstlsnippets",
+        "J0hnMilt0n.vscode-jsp-clone",
+        "samuel-weinhardt.vscode-jsp-lang",
+        "johnstoncode.svn-scm",
+        "rinrab.subversion",
+        "Anthropic.claude-code"
+    ]
+}

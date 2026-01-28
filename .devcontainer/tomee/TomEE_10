@@ -1,0 +1,17 @@
+{
+  "id": "TomEE 10.x",
+  "id-set": "true",
+  "server.base.dir": "/opt/tomcat",
+  "server.home.dir": "/opt/tomcat",
+  "server.http.host": "localhost",
+  "server.http.port": "8080",
+  "server.deploy.dir": "${server.base.dir}/webapps/",
+  "args.override.boolean": "false",
+  "args.program.override.string": "start",
+  "args.shutdown.program.override.string": "stop",
+  "args.shutdown.vm.override.string": "-Djava.util.logging.config.file=\"/opt/tomcat/conf/logging.properties\" -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Dcatalina.base=\"/opt/tomcat\" -Dcatalina.home=\"/opt/tomcat\" -Djava.io.tmpdir=\"/opt/tomcat/temp\"",
+  "args.vm.override.string": "-Djava.util.logging.config.file=\"/opt/tomcat/conf/logging.properties\" -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Dcatalina.base=\"/opt/tomcat\" -Dcatalina.home=\"/opt/tomcat\" -Djava.io.tmpdir=\"/opt/tomcat/temp\"",
+  "org.jboss.tools.rsp.server.typeId": "org.jboss.ide.eclipse.as.server.tomcat.100",
+  "server.classpath.additions": "",
+  "vm.install.path": ""
+}

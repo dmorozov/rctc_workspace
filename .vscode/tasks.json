@@ -1,0 +1,213 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "TomEE: Compile and Start Debug",
+      "type": "shell",
+      "command": "./mvnw compile -pl VioWeb -am && ./mvnw org.apache.tomee.maven:tomee-maven-plugin:debug -pl VioWeb",
+      "args": [],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "tomee",
+        "pattern": {
+          "regexp": "^\\[ERROR\\]\\s+(.*):(\\d+):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^\\[INFO\\].*tomee-maven-plugin.*",
+          "endsPattern": "^.*Listening for transport dt_socket at address: 5005.*$"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "TomEE: Start (No Debug)",
+      "type": "shell",
+      "command": "./mvnw compile -pl VioWeb -am && ./mvnw org.apache.tomee.maven:tomee-maven-plugin:run -pl VioWeb",
+      "args": [],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "tomee",
+        "pattern": {
+          "regexp": "^\\[ERROR\\]\\s+(.*):(\\d+):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^\\[INFO\\].*tomee-maven-plugin.*",
+          "endsPattern": "^.*Server startup in.*$"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "TomEE: Compile VioWeb",
+      "type": "shell",
+      "command": "./mvnw",
+      "args": [
+        "compile",
+        "-pl",
+        "VioWeb",
+        "-am"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build",
+      "problemMatcher": "$maven",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      }
+    },
+    {
+      "label": "TomEE: Compile All Modules",
+      "type": "shell",
+      "command": "./mvnw",
+      "args": [
+        "compile",
+        "-pl",
+        "VioUtil,VioEJB,VioWeb"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build",
+      "problemMatcher": "$maven",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      }
+    },
+    {
+      "label": "TomEE: Stop Server",
+      "type": "shell",
+      "command": "pkill",
+      "args": ["-f", "org.apache.tomee"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "TomEE EAR: Debug",
+      "type": "shell",
+      "command": "./mvnw org.apache.tomee.maven:tomee-maven-plugin:debug -pl VioApp -Dtomee",
+      "args": [],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "tomee-ear",
+        "pattern": {
+          "regexp": "^\\[ERROR\\]\\s+(.*):(\\d+):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^\\[INFO\\].*tomee-maven-plugin.*",
+          "endsPattern": "^.*Listening for transport dt_socket at address: 5005.*$"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "TomEE EAR: Start (No Debug)",
+      "type": "shell",
+      "command": "./mvnw org.apache.tomee.maven:tomee-maven-plugin:run -pl VioApp",
+      "args": [],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "tomee-ear",
+        "pattern": {
+          "regexp": "^\\[ERROR\\]\\s+(.*):(\\d+):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^\\[INFO\\].*tomee-maven-plugin.*",
+          "endsPattern": "^.*Server startup in.*$"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "TomEE EAR: Compile All Modules",
+      "type": "shell",
+      "command": "./mvnw",
+      "args": [
+        "compile",
+        "-pl",
+        "VioUtil,VioEJB,VioWeb,VioWebAdmin,VTX-TXAPI"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build",
+      "problemMatcher": "$maven",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      }
+    }
+  ]
+}

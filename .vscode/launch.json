@@ -1,0 +1,72 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "TomEE Debug (Hot Reload)",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5005,
+      "preLaunchTask": "TomEE: Compile and Start Debug",
+      "postDebugTask": "TomEE: Stop Server",
+      "sourcePaths": [
+        "${workspaceFolder}/VioUtil/src",
+        "${workspaceFolder}/VioEJB/ejbModule",
+        "${workspaceFolder}/VioWeb/src"
+      ]
+    },
+    {
+      "type": "java",
+      "name": "TomEE Attach Only",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5005,
+      "sourcePaths": [
+        "${workspaceFolder}/VioUtil/src",
+        "${workspaceFolder}/VioEJB/ejbModule",
+        "${workspaceFolder}/VioWeb/src"
+      ]
+    },
+    {
+      "type": "java",
+      "name": "TaskClient",
+      "request": "launch",
+      "mainClass": "com.vesystems.violation.task.TaskClient",
+      "projectName": "VioTaskClient"
+    },
+    {
+      "type": "java",
+      "name": "TomEE EAR Debug (Full App)",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5005,
+      "preLaunchTask": "TomEE EAR: Debug",
+      "postDebugTask": "TomEE: Stop Server",
+      "projectName": "VioApp",
+      "sourcePaths": [
+        "${workspaceFolder}/VioUtil/src",
+        "${workspaceFolder}/VioEJB/ejbModule",
+        "${workspaceFolder}/VioWeb/src",
+        "${workspaceFolder}/VioWebAdmin/src",
+        "${workspaceFolder}/VTX-TXAPI/src"
+      ]
+    },
+    {
+      "type": "java",
+      "name": "TomEE EAR Attach Only",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5005,
+      "sourcePaths": [
+        "${workspaceFolder}/VioUtil/src",
+        "${workspaceFolder}/VioEJB/ejbModule",
+        "${workspaceFolder}/VioWeb/src",
+        "${workspaceFolder}/VioWebAdmin/src",
+        "${workspaceFolder}/VTX-TXAPI/src"
+      ]
+    }
+  ]
+}
